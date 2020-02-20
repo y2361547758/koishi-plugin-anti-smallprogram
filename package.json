@@ -1,0 +1,27 @@
+{
+  "name": "koishi-plugin-anti-smallprogram",
+  "version": "1.0.0",
+  "description": "plugin for koishi, dump smallprogram message in qq group",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo nothing to do"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/y2361547758/koishi-plugin-anti-smallprogram.git"
+  },
+  "keywords": [
+    "koishi",
+    "QQbot",
+    "smallprogram"
+  ],
+  "author": "MisakaHonoka",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5",
+    "koishi-core": "^1.6.0",
+    "koishi-utils": "^1.0.2"
+  }
+}
