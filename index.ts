@@ -16,15 +16,12 @@ export function apply (ctx: Context) {
         try {
             search = await axios.get('https://api.bilibili.com/x/web-interface/search/all/v2?highlight=0&keyword=' + encodeURI(content.detail_1.desc))
             search = search.data.data
+            if (search.numResults <= 0) throw "not found"
             logger.debug(search)
         } catch (e) {
             logger.debug(e)
             logger.error('Request Bilibili failed')
-            return meta.$send('[Bilibili]' + content.detail_1.desc + '\n[CQ:image,file=' + content.detail_1.preview + ']')
-        }
-        if (search.numResults <= 0) {
-            logger.error('Bilibili video not found')
-            return meta.$send('[Bilibili]' + content.detail_1.desc + '\n[CQ:image,file=' + content.detail_1.preview + ']')
+            return meta.$send('[Bilibili]' + content.detail_1.desc + '[CQ:image,file=' + content.detail_1.preview + ']')
         }
         while (search.result.length) {
             const i = search.result.pop()
@@ -33,7 +30,10 @@ export function apply (ctx: Context) {
                 const title = item.title || item.game_name || item.uname
                 const url = item.arcurl || item.goto_url || item.game_url || (item.mid ? 'https://space.bilibili.com/' + item.mid : '')
                 const img = item.pic || item.cover || item.game_icon || item.upic
-                return meta.$send(url + "\n" + title.replace(/<\/?.+?>/g,"") + "\n" + '[CQ:image,file=http:' + img + ']')
+                const des = item.description || item.desc || item.summary
+                // const msg = "[CQ:share,url=" + url + ",title=" + title.replace(/<\/?.+?>/g,"") + ",content=" + des.replace(/<\/?.+?>/g,"") + ",image=" + img + "]"
+                const msg = url + "\n" + title.replace(/<\/?.+?>/g,"") + '[CQ:image,file=http:' + img + ']'
+                return meta.$send(msg)
             }
         }
     })

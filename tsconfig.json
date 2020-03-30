@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "removeComments": true,
+    "lib": ["ES2015"],
+    "strict": true,
+    "strictNullChecks": false,
+    "noFallthroughCasesInSwitch": false
+    }
+}
